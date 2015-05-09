@@ -136,4 +136,23 @@ module.exports = {
             t.done();
         },
     },
+
+    'array_flip': {
+        'should flip keys and values': function(t) {
+            var data = [
+                [ {}, {} ],
+                [ {a:1}, {1:'a'} ],
+                [ {a:1,b:1}, {1:'b'} ],
+                [ {a:1, a:2}, {2:'a'} ],
+                [ 3, {} ],
+                [ [], {} ],
+                [ ['a', 'b', 'b'], {a:0, b:2} ],
+            ];
+            for (var i in data) {
+                var row = data[i];
+                assert.deepEqual(ops.array_flip(row[0]), row[1]);
+            }
+            t.done();
+        },
+    },
 }

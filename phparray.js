@@ -71,4 +71,12 @@ module.exports = {
         }
         return c;
     },
+
+    array_flip:
+    function array_flip( a ) {
+        // flips keys and values on arrays and objects, always returns an object
+        var c = {};
+        for (var i in a) c[a[i]] = i;
+        return c;
+    },
 }
