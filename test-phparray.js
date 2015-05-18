@@ -155,4 +155,34 @@ module.exports = {
             t.done();
         },
     },
+
+    'array_fill': {
+        'should fill array with values': function(t) {
+            var data = [
+                [ 0, 0, 123, [] ],
+                [ 0, 1, 123, [123] ],
+                [ 2, 2, 456, [,,456,456] ],
+            ];
+            for (var i in data) {
+                var row = data[i];
+                assert.deepEqual(ops.array_fill(row[0], row[1], row[2]), row[3]);
+            }
+            t.done();
+        },
+    },
+
+    'array_fill_keys': {
+        'should create hash with keys': function(t) {
+            var data = [
+                [ [], 123, {} ],
+                [ ['a'], 123, {a:123} ],
+                [ ['a', 'b', 'c'], 456, {a:456, b:456, c:456} ],
+            ];
+            for (var i in data) {
+                var row = data[i];
+                assert.deepEqual(ops.array_fill_keys(row[0], row[1]), row[2]);
+            }
+            t.done();
+        },
+    },
 }

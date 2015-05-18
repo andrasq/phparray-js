@@ -79,4 +79,20 @@ module.exports = {
         for (var i in a) c[a[i]] = i;
         return c;
     },
+
+    array_fill:
+    function array_fill( base, count, value ) {
+        var c = [];
+        for (var i=base; i<base+count; i++) c[i] = value;
+        return c;
+    },
+
+    array_fill_keys:
+    function array_fill_keys( keys, value ) {
+        var c = {};
+        for (var i in keys) {
+            c[keys[i]] = value;
+        }
+        return c;
+    },
 }

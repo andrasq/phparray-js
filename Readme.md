@@ -64,3 +64,17 @@ Returns an object with all field in `a` indexed by their value.
 
         array_flip(['a', 'b'])                  // => { a:0, b:1 }
         array_flip({a:1, b:2})                  // => { 1:'a', 2:'b' }
+
+### array_fill( offset, count, value )
+
+Returns an array containing `count` elements with starting index
+`offset`, each having value `value`.
+
+        array_fill(2, 3, 7)                     // => [ , , 7, 7, 7 ]
+
+### array_fill_keys( keys, value )
+
+Returns an object with fields having names being the values of `keys`
+and each field having value `value`.
+
+        array_fill_keys(['a', 'b'], 7)          // => { a:7, b:7 }
