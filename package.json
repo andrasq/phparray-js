@@ -1,10 +1,14 @@
 {
     "name": "phparray",
-    "version": "0.9.2",
+    "version": "0.9.2-doc1",
     "description": "php-like associative array operations",
     "license": "Apache-2.0",
     "main": "phparray.js",
     "author": { "name": "Andras", "url": "https://github.com/andrasq" },
+    "repository": {
+        "url": "git://github.com/andrasq/phparray-js",
+        "type": "git"
+    },
     "keywords": [
         "php", "array", "array_merge", "array_intersect_key", "array_diff_key", "Andras"
     ],
