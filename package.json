@@ -1,6 +1,6 @@
 {
     "name": "phparray",
-    "version": "0.9.3",
+    "version": "0.9.4",
     "description": "php-like associative array operations",
     "license": "Apache-2.0",
     "main": "phparray.js",
@@ -16,6 +16,6 @@
         "test": "qunit test-phparray.js"
     },
     "devDependencies": {
-        "qunit": "*"
+        "node-qunit": "*"
     }
 }
