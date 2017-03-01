@@ -13,9 +13,10 @@
         "php", "array", "array_merge", "array_intersect_key", "array_diff_key", "Andras"
     ],
     "scripts": {
-        "test": "qunit test-phparray.js"
+        "test": "qnit test-phparray.js",
+        "coverage": "nyc --version && nyc --reporter lcov --reporter text qnit test* || echo nyc not installed"
     },
     "devDependencies": {
-        "node-qunit": "*"
+        "qnit": "*"
     }
 }

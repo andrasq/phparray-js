@@ -1,7 +1,7 @@
 /**
  * php-like associative array (object) operations
  *
- * Copyright (C) 2015 Andras Radics
+ * Copyright (C) 2015,2017 Andras Radics
  * Licensed under the Apache License, Version 2.0
  */
 
@@ -12,6 +12,8 @@
  *      - in php, only objects can have inheritance
  *      - our implementation presumes hashes, and ignores inheritance
  */
+
+'use strict';
 
 module.exports = {
 
@@ -42,6 +44,26 @@ module.exports = {
             var a = arguments[k];
             if (typeof a !== 'object') continue;
             for (var i in a) c[i] = a[i];
+        }
+        return c;
+    },
+
+    array_diff:
+    function array_diff( a /* VARARGS */ ) {
+        var c = [];
+        if (a && a.length > 0 && a[0]) {
+            // TODO: this is primitive, for short arrays only!
+            var idx, k = new Array(a.length);
+            for (var i=0; i<a.length; i++) k[i] = a[i];
+            for (var i=1; i<arguments.length; i++) {
+                var b = arguments[i];
+                for (var j=0; j<b.length; j++) {
+                    while ((idx = k.indexOf(b[j])) >= 0) {
+                        k[idx] = undefined;
+                    }
+                }
+            }
+            for (var i=0; i<k.length; i++) if (k[i] !== undefined) c.push(k[i]);
         }
         return c;
     },

@@ -1,11 +1,19 @@
-assert = require('assert');
+/**
+ * php-like associative array (object) operations
+ *
+ * Copyright (C) 2015,2017 Andras Radics
+ * Licensed under the Apache License, Version 2.0
+ */
 
-ops = require('./phparray');
+'use strict';
+
+var assert = require('assert');
+var ops = require('./phparray');
 
 module.exports = {
     'package.json': {
         'should be valid': function(t) {
-            json = require('./package.json');
+            var json = require('./package.json');
             t.done();
         },
     },
@@ -92,9 +100,43 @@ module.exports = {
         },
     },
 
-    'array_diff_key': {
-        'should diff objects': function(t) {
+    'array_diff': {
+        'should diff arrays': function(t) {
             var data = [
+                [ [1, 2], [2, 3], [1] ],
+                [ [1, 2, 2], [2], [1] ],
+                [ [1, 2], [4, 3], [1, 2] ],
+                [ [1, 2], [1, 2, 3], [ ] ],
+            ];
+            for (var i=0; i<data.length; i++) {
+                var row = data[i];
+                assert.deepEqual(ops.array_diff(row[0], row[1]), row[2]);
+            }
+            t.done();
+        },
+
+        'should diff multiple arrays': function(t) {
+            assert.deepEqual(ops.array_diff([1, 2, "b", 3, 4], [1, 2], [2, 4], [1, 2, 2, "b"]), [3]);
+            assert.deepEqual(ops.array_diff([1, "b"], [3, 4], [5, 6]), [1, "b"]);
+            t.done();
+        },
+
+        'should ignore non-arrays': function(t) {
+            assert.deepEqual(ops.array_diff(1, 2), []);
+            assert.deepEqual(ops.array_diff(null, [1]), []);
+            // TODO: right now array_diff("test", "t") => "es" -- is that good?
+            t.done();
+        },
+    },
+
+    'array_diff_key': {
+        'should remove present fields': function(t) {
+            var data = [
+                [ {}, {a: 1}, {} ],
+                [ {a: 1}, {}, {a: 1} ],
+                [ {a: 1, b: "b"}, {c: {}}, {a: 1, b: "b"} ],
+                [ {a: 1, b: "b", c: {}}, {c: {}}, {a: 1, b: "b"} ],
+                [ {a: 1}, {a: {}}, {} ],
             ];
             for (var i in data) {
                 var row = data[i];
@@ -103,11 +145,19 @@ module.exports = {
             t.done();
         },
 
-        'should diff multiple objects': function(t) {
+        'should diff multiple hashes': function(t) {
             assert.deepEqual(
                 ops.array_diff_key({a:1, b:2, c:3}, {b:22}, {c:33}),
                 {a:1}
             );
+            t.done();
+        },
+
+        'should diff no hashes': function(t) {
+            assert.deepEqual(ops.array_diff_key(), {});
+            assert.deepEqual(ops.array_diff_key({a:1}), {a:1});
+            assert.deepEqual(ops.array_diff_key({a:1}, {}), {a:1});
+            assert.deepEqual(ops.array_diff_key({a:1}, "a"), {a:1});
             t.done();
         },
     },
@@ -133,6 +183,14 @@ module.exports = {
                 ops.array_intersect_key({a:1, b:2, c:3}, {a:2, b:3}, {b:4, c:5}),
                 {b:2}
             );
+            t.done();
+        },
+
+        'should intersect no hashes': function(t) {
+            assert.deepEqual(ops.array_intersect_key(), {});
+            assert.deepEqual(ops.array_intersect_key({a:1}), {a:1});
+            assert.deepEqual(ops.array_intersect_key({a:1}, {}), {});
+            assert.deepEqual(ops.array_intersect_key({a:1}, "a"), {a:1});
             t.done();
         },
     },
